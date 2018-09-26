@@ -1,4 +1,4 @@
-from flask import Blurprint
+from flask import Blueprint
 
 main = Blueprint('main', __name__)
 

@@ -2,7 +2,7 @@ from . import db
 
 
 class Role(db.Model):
-	__tabelname__ = 'roles'
+	__tablename__ = 'roles'
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(64), unique=True)
 	users = db.relationship('User', backref='role', lazy='dynamic')
@@ -12,10 +12,10 @@ class Role(db.Model):
 
 
 class User(db.Model):
-	__tabelname__ = 'users'
+	__tablename__ = 'users'
 	id = db.Column(db.Integer, primary_key=True)
 	username = db.Column(db.String(64), unique=True, index=True)
-	role_id = db.Column(db.Integer, foreign_key='roles.id')
+	role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
 
 	def __repr__(self):
 		return '<User %r>' % self.username

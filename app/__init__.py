@@ -16,12 +16,12 @@ db = SQLAlchemy()
 
 # 工厂函数
 def create_app(config_name):
-	app = Flask()
+	app = Flask(__name__)
 	# 将config.py中的配置对象，用.from_object()方法导入应用实例
 	app.config.from_object(config[config_name])
 	config[config_name].init_app(app)
 
-	bootsrap.init_app(app)
+	bootstrap.init_app(app)
 	mail.init_app(app)
 	moment.init_app(app)
 	db.init_app(app)
