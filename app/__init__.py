@@ -6,13 +6,16 @@ from flask_mail import Mail
 from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 from config import config
+from flask_login import LoginManager
 
 # 实例化一些对象(扩展)
 bootstrap = Bootstrap()
 mail = Mail()
 moment = Moment()
 db = SQLAlchemy()
-
+# login_view 属性用于设置登陆页面的端点
+login_manager = LoginManager()
+login_manager.login_view = 'auth.login'
 
 # 工厂函数
 def create_app(config_name):
@@ -25,9 +28,14 @@ def create_app(config_name):
 	mail.init_app(app)
 	moment.init_app(app)
 	db.init_app(app)
+	login_manager.init_app(app)
 
 	# 导入、注册蓝本
 	from .main import main as main_blueprint
 	app.register_blueprint(main_blueprint)
+
+	# 导入、注册身份验证蓝本
+	from .auth import auth as auth_blueprint
+	app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
 	return app
