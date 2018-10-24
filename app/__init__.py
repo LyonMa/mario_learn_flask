@@ -7,6 +7,7 @@ from flask_moment import Moment
 from flask_sqlalchemy import SQLAlchemy
 from config import config
 from flask_login import LoginManager
+from flask_pagedown import PageDown
 
 # 实例化一些对象(扩展)
 bootstrap = Bootstrap()
@@ -16,6 +17,7 @@ db = SQLAlchemy()
 # login_view 属性用于设置登陆页面的端点
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
+pagedown = PageDown()
 
 # 工厂函数
 def create_app(config_name):
@@ -29,6 +31,7 @@ def create_app(config_name):
 	moment.init_app(app)
 	db.init_app(app)
 	login_manager.init_app(app)
+	pagedown.init_app(app)
 
 	# 导入、注册蓝本
 	from .main import main as main_blueprint
