@@ -21,24 +21,24 @@ pagedown = PageDown()
 
 # 工厂函数
 def create_app(config_name):
-	app = Flask(__name__)
-	# 将config.py中的配置对象，用.from_object()方法导入应用实例
-	app.config.from_object(config[config_name])
-	config[config_name].init_app(app)
+    app = Flask(__name__)
+    # 将config.py中的配置对象，用.from_object()方法导入应用实例
+    app.config.from_object(config[config_name])
+    config[config_name].init_app(app)
 
-	bootstrap.init_app(app)
-	mail.init_app(app)
-	moment.init_app(app)
-	db.init_app(app)
-	login_manager.init_app(app)
-	pagedown.init_app(app)
+    bootstrap.init_app(app)
+    mail.init_app(app)
+    moment.init_app(app)
+    db.init_app(app)
+    login_manager.init_app(app)
+    pagedown.init_app(app)
 
-	# 导入、注册蓝本
-	from .main import main as main_blueprint
-	app.register_blueprint(main_blueprint)
+    # 导入、注册蓝本
+    from .main import main as main_blueprint
+    app.register_blueprint(main_blueprint)
 
-	# 导入、注册身份验证蓝本
-	from .auth import auth as auth_blueprint
-	app.register_blueprint(auth_blueprint, url_prefix='/auth')
+    # 导入、注册身份验证蓝本
+    from .auth import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint, url_prefix='/auth')
 
-	return app
+    return app
