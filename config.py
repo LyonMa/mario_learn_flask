@@ -33,6 +33,7 @@ class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('TEST_DATABASE_URL') or \
         'sqlite://'
+    WTF_CSRF_ENABLED = False
         # 测试环境中的数据库指向内存，因为其数据不需要被保存
 
 
