@@ -8,7 +8,7 @@ if os.environ.get('FLASK_COVERAGE'):
 
 import sys
 import click
-from flask_migrate import Migrate
+from flask_migrate import Migrate, upgrade
 from app import create_app, db
 from app.models import User, Follow, Role, Permission, Post, Comment
 
@@ -45,3 +45,16 @@ def test(coverage):
         COV.html_report(directory=covdir)
         print('HTML version: file://%s/index.html' % covdir)
         COV.erase()
+
+
+@app.cli.command()
+def deploy():
+    """run deploy tasts."""
+    # migrate database to latest version
+    upgrade()
+
+    # create or renew the user roles
+    Role.insert_roles()
+
+    # ensures all users are following themselves
+    User.add_self_follows()
